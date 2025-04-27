@@ -12,27 +12,29 @@ interface EditPageProps {
 params: {
     id: string;
   };
-}
-
 export default async function EditPage({ params }: EditPageProps) {
   const todo = await getTodoById(params.id);
 
+  if (!todo) {
+    return (
+      <Layout title="Todo Not Found">
+        <Header title="Todo Not Found" showBackButton={true} />
+        <div className="container mx-auto p-4">
+          <p>The requested todo item was not found.</p>
+        </div>
+      </Layout>
+    );
+  }
+
   return (
-    <Layout title="Edit To-Do">
-      <Header title="Edit To-Do" showBackButton={true} />
+    <Layout title={`Edit Todo: ${todo.text}`}>
+      <Header title="Edit Todo" showBackButton={true} />
       <div className="container mx-auto p-4">
-        {todo ? (
-          <EditTodoForm initialTodo={todo} />
-        ) : (
-          <p>Todo not found.</p>
-        )}
+        <EditTodoForm initialTodo={todo} />
       </div>
     </Layout>
   );
 }
-  return (
-    <Layout title={`Edit Todo: ${todoToEdit.text}`}>
-      <div className="container mx-auto p-4">
         <h1 className="text-2xl font-bold mb-4">Edit Todo</h1>
         <EditTodoForm todo={todoToEdit} />
       </div>
