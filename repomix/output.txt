@@ -4,83 +4,36 @@ The content has been processed where line numbers have been added.
 <files>
 This section contains the contents of the repository's files.
 
-<file path="components/TodoItem.tsx">
- 1: "use client";
- 2: 
- 3: import { useRouter } from "next/navigation";
- 4: import type { Todo } from "@/lib/types/todo";
- 5: import { Checkbox } from "@/components/ui/checkbox";
- 6: import { Button } from "@/components/ui/button";
- 7: import { Edit, Trash2 } from "lucide-react";
- 8: import { toggleTodo, deleteTodo } from "@/backend/todo/actions";
- 9: import { cn } from "@/lib/utils";
+<file path="app/layout.tsx">
+ 1: import "../styles/globals.css";
+ 2: import type { Metadata } from "next";
+ 3: import { Inter } from "next/font/google";
+ 4: import IframeEventHandler from "@/components/IframeEventHandler";
+ 5: 
+ 6: const inter = Inter({
+ 7:   subsets: ["latin"],
+ 8:   variable: "--font-sans",
+ 9: });
 10: 
-11:    interface TodoItemProps {
-12:      todo: Todo;
-13:      onTodoUpdated: () => void;
-14:    }
+11: export const metadata: Metadata = {
+12: title: "To-Do App",
+13:   description: "A simple todo app built with Next.js",
+14: };
 15: 
-16: export function TodoItem({ todo, onTodoUpdated }: TodoItemProps) {
-17:   const router = useRouter();
-18:   const [isLoading, setIsLoading] = useState(false);
-19: 
-20:      const handleToggle = async () => {
-21:        setIsLoading(true);
-22:        await toggleTodo(todo.id);
-23:        onTodoUpdated();
-24:        setIsLoading(false);
-25:      };
-26: 
-27:      const handleDelete = async () => {
-28:        setIsLoading(true);
-29:        await deleteTodo(todo.id);
-30:        onTodoUpdated();
-31:        setIsLoading(false);
-32:      };
-33: const handleEditClick = () => {
-34:     router.push(`/edit/${todo.id}`);
-35:   };
-36: 
-37:      return (
-38:        <div className="flex items-center space-x-2 py-2">
-39:          <Checkbox
-40:            id={`todo-${todo.id}`}
-41:            checked={todo.completed}
-42:            onCheckedChange={handleToggle}
-43:            disabled={isLoading}
-44:          />
-45: <label
-46:             htmlFor={`todo-${todo.id}`}
-47:             className={cn(
-48:               "flex-grow text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
-49:               todo.completed && "line-through text-gray-500"
-50:             )}
-51:           >
-52:             {todo.text}
-53:           </label>
-54: 
-55: <div className="flex space-x-1">
-56:             <Button
-57:               variant="ghost"
-58:               size="sm"
-59:               onClick={handleEditClick}
-60:               disabled={isLoading}
-61:             >
-62:               <Edit className="h-4 w-4" />
-63:             </Button>
-64:             <Button
-65:               variant="ghost"
-66:               size="sm"
-67:               onClick={handleDelete}
-68:               disabled={isLoading}
-69:             >
-70:               <Trash2 className="h-4 w-4" />
-71:             </Button>
-72:           </div>
-73:          </div>
-74:        </div>
-75:      );
-76:    }
+16: export default function RootLayout({
+17:   children,
+18: }: {
+19:   children: React.ReactNode;
+20: }) {
+21:   return (
+22:     <html lang="en" className={inter.variable}>
+23:       <body className="min-h-screen bg-background font-sans antialiased">
+24:         {children}
+25:         <IframeEventHandler />
+26:       </body>
+27:     </html>
+28:   );
+29: }
 </file>
 
 </files>
