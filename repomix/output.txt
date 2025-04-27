@@ -4,36 +4,24 @@ The content has been processed where line numbers have been added.
 <files>
 This section contains the contents of the repository's files.
 
-<file path="app/layout.tsx">
- 1: import "../styles/globals.css";
- 2: import type { Metadata } from "next";
- 3: import { Inter } from "next/font/google";
- 4: import IframeEventHandler from "@/components/IframeEventHandler";
- 5: 
- 6: const inter = Inter({
- 7:   subsets: ["latin"],
- 8:   variable: "--font-sans",
- 9: });
-10: 
-11: export const metadata: Metadata = {
-12: title: "To-Do App",
-13:   description: "A simple todo app built with Next.js",
-14: };
-15: 
-16: export default function RootLayout({
-17:   children,
-18: }: {
-19:   children: React.ReactNode;
-20: }) {
-21:   return (
-22:     <html lang="en" className={inter.variable}>
-23:       <body className="min-h-screen bg-background font-sans antialiased">
-24:         {children}
-25:         <IframeEventHandler />
-26:       </body>
-27:     </html>
-28:   );
-29: }
+<file path="lib/types/todo.ts">
+ 1: /**
+ 2:  * Interface for a To-Do item.
+ 3:  */
+ 4: export interface Todo {
+ 5:   /**
+ 6:    * Unique identifier for the To-Do item.
+ 7:    */
+ 8:   id: string;
+ 9:   /**
+10:    * The task description.
+11:    */
+12:   text: string;
+13:   /**
+14:    * Completion status of the To-Do item.
+15:    */
+16:   completed: boolean;
+17: }
 </file>
 
 </files>
