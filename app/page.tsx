@@ -25,15 +25,10 @@ export default function Home() {
 
   return (
     <div className="flex flex-col h-screen bg-gray-50">
-      <Header title="Todo App" />
+<Header title="Todo App" rightContent={<FilterSortControls currentFilter={filter} currentSort={sort} onFilterChange={handleFilterChange} onSortChange={handleSortChange} />} />
       <main className="flex-grow container mx-auto p-4 overflow-hidden flex flex-col">
-        <div className="mb-4">
-          <FilterSortControls
-            currentFilter={filter}
-            currentSort={sort}
-            onFilterChange={handleFilterChange}
-            onSortChange={handleSortChange}
-          />
+<div className="flex-grow overflow-y-auto">
+          <TodoList key={refreshList} filter={filter} sort={sort} />
         </div>
         <div className="flex-grow overflow-y-auto">
           <TodoList key={refreshList} filter={filter} sort={sort} />
