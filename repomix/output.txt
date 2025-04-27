@@ -4,4 +4,40 @@ The content has been processed where line numbers have been added.
 <files>
 This section contains the contents of the repository's files.
 
+<file path="components/Header.tsx">
+ 1: "use client";
+ 2: 
+ 3: import { useRouter } from "next/navigation";
+ 4: import { Button } from "@/components/ui/button";
+ 5: import { ArrowLeft } from "lucide-react";
+ 6: 
+ 7: interface HeaderProps {
+ 8:   title: string;
+ 9:   showBackButton?: boolean;
+10: }
+11: 
+12: export function Header({ title, showBackButton = false }: HeaderProps) {
+13:   const router = useRouter();
+14: 
+15:   const handleBack = () => {
+16:     router.back();
+17:   };
+18: 
+19:   return (
+20:     <header className="flex items-center justify-between p-4 bg-white shadow-sm">
+21:       {showBackButton ? (
+22:         <Button variant="ghost" size="icon" onClick={handleBack}>
+23:           <ArrowLeft className="h-5 w-5" />
+24:           <span className="sr-only">Back</span>
+25:         </Button>
+26:       ) : (
+27:         <div className="w-10"></div> // Placeholder for alignment
+28:       )}
+29:       <h1 className="text-xl font-semibold">{title}</h1>
+30:       <div className="w-10"></div> {/* Placeholder for alignment */}
+31:     </header>
+32:   );
+33: }
+</file>
+
 </files>
