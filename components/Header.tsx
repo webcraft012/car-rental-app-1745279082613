@@ -7,9 +7,6 @@ import { ArrowLeft } from "lucide-react";
 interface HeaderProps {
   title: string;
   showBackButton?: boolean;
-interface HeaderProps {
-  title: string;
-  showBackButton?: boolean;
   rightContent?: React.ReactNode;
 }
 
@@ -31,7 +28,7 @@ interface HeaderProps {
           {rightContent}
         </div>
       </div>
-      <h1 className="text-xl font-semibold">{title}</h1>
+<h1 className="text-xl font-semibold">{title}</h1>
       <div className="w-10"></div> {/* Placeholder for alignment */}
     </header>
   );

@@ -4,63 +4,45 @@ The content has been processed where line numbers have been added.
 <files>
 This section contains the contents of the repository's files.
 
-<file path="components/EditTodoForm.tsx">
+<file path="components/Header.tsx">
  1: "use client";
  2: 
- 3: import { useState } from "react";
- 4: import { useRouter } from "next/navigation";
- 5: import type { Todo } from "@/lib/types/todo";
- 6: import { Input } from "@/components/ui/input";
- 7: import { Button } from "@/components/ui/button";
- 8: import { editTodo } from "@/backend/todo/actions";
- 9: 
-10: interface EditTodoFormProps {
-11:   initialTodo: Todo;
-12: }
-13: 
-14: export function EditTodoForm({ initialTodo }: EditTodoFormProps) {
-15:   const [editText, setEditText] = useState(initialTodo.text);
-16:   const [isLoading, setIsLoading] = useState(false);
-17:   const router = useRouter();
-18: 
-19:   const handleSubmit = async (e: React.FormEvent) => {
-20:     e.preventDefault();
-21:     setIsLoading(true);
-22:     try {
-23:       await editTodo(initialTodo.id, editText);
-24:       router.push("/");
-25:     } catch (error) {
-26:       console.error("Failed to edit todo:", error);
-27:       // Optionally display an error message to the user
-28:     } finally {
-29:       setIsLoading(false);
-30:     }
-31:   };
-32: 
-33:   const handleCancel = () => {
-34:     router.push("/");
-35:   };
-36: 
-37:   return (
-38:     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-39:       <Input
-40:         type="text"
-41:         value={editText}
-42:         onChange={(e) => setEditText(e.target.value)}
-43:         placeholder="Edit todo"
-44:         disabled={isLoading}
-45:       />
-46:       <div className="flex gap-2">
-47:         <Button type="submit" disabled={isLoading}>
-48:           {isLoading ? "Saving..." : "Save"}
-49:         </Button>
-50:         <Button type="button" variant="outline" onClick={handleCancel} disabled={isLoading}>
-51:           Cancel
-52:         </Button>
-53:       </div>
-54:     </form>
-55:   );
-56: }
+ 3: import { useRouter } from "next/navigation";
+ 4: import { Button } from "@/components/ui/button";
+ 5: import { ArrowLeft } from "lucide-react";
+ 6: 
+ 7: interface HeaderProps {
+ 8:   title: string;
+ 9:   showBackButton?: boolean;
+10: interface HeaderProps {
+11:   title: string;
+12:   showBackButton?: boolean;
+13:   rightContent?: React.ReactNode;
+14: }
+15: 
+16:   const handleBack = () => {
+17:     router.back();
+18:   };
+19: 
+20:   return (
+21: <div className="flex items-center justify-between w-full">
+22:         <div className="w-10">
+23:           {showBackButton && (
+24:             <Button variant="ghost" size="icon" onClick={handleBack}>
+25:               <ArrowLeft className="h-5 w-5" />
+26:             </Button>
+27:           )}
+28:         </div>
+29:         <h1 className="text-xl font-bold">{title}</h1>
+30:         <div className="w-10 flex justify-end">
+31:           {rightContent}
+32:         </div>
+33:       </div>
+34:       <h1 className="text-xl font-semibold">{title}</h1>
+35:       <div className="w-10"></div> {/* Placeholder for alignment */}
+36:     </header>
+37:   );
+38: }
 </file>
 
 </files>
