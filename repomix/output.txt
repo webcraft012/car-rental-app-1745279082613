@@ -1,0 +1,16 @@
+This file is a merged representation of a subset of the codebase, containing specifically included files, combined into a single document by Repomix.
+The content has been processed where line numbers have been added.
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="lib/types/example.ts">
+1: /**
+2:  * Types placeholder - Todo functionality removed
+3:  */
+4: 
+5: // Empty interface placeholder
+6: export interface PlaceholderType {}
+</file>
+
+</files>
