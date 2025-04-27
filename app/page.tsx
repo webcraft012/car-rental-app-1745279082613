@@ -30,9 +30,7 @@ export default function Home() {
 <div className="flex-grow overflow-y-auto">
           <TodoList key={refreshList} filter={filter} sort={sort} />
         </div>
-        <div className="flex-grow overflow-y-auto">
-          <TodoList key={refreshList} filter={filter} sort={sort} />
-        </div>
+
       </main>
       <footer className="p-4 bg-white shadow-sm">
         <AddTodoForm onTodoAdded={handleTodoAdded} />
