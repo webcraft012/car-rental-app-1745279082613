@@ -4,24 +4,36 @@ The content has been processed where line numbers have been added.
 <files>
 This section contains the contents of the repository's files.
 
-<file path="app/page.tsx">
- 1: /**
- 2:  * Main page component as an async server component.
- 3:  */
- 4: export default function Home() {
- 5:   return (
- 6:     <main className="min-h-screen bg-gray-50 py-8">
- 7:       <div className="container mx-auto">
- 8:         <h1 className="text-3xl font-bold text-center mb-8">Welcome</h1>
- 9:         <div className="bg-white p-6 rounded-lg shadow-md">
-10:           <p className="text-center text-gray-600">
-11:             This is a Next.js application with the structure in place.
-12:           </p>
-13:         </div>
-14:       </div>
-15:     </main>
-16:   );
-17: }
+<file path="app/layout.tsx">
+ 1: import "../styles/globals.css";
+ 2: import type { Metadata } from "next";
+ 3: import { Inter } from "next/font/google";
+ 4: import IframeEventHandler from "@/components/IframeEventHandler";
+ 5: 
+ 6: const inter = Inter({
+ 7:   subsets: ["latin"],
+ 8:   variable: "--font-sans",
+ 9: });
+10: 
+11: export const metadata: Metadata = {
+12:   title: "Todo App",
+13:   description: "A simple todo app built with Next.js",
+14: };
+15: 
+16: export default function RootLayout({
+17:   children,
+18: }: {
+19:   children: React.ReactNode;
+20: }) {
+21:   return (
+22:     <html lang="en" className={inter.variable}>
+23:       <body className="min-h-screen bg-background font-sans antialiased">
+24:         {children}
+25:         <IframeEventHandler />
+26:       </body>
+27:     </html>
+28:   );
+29: }
 </file>
 
 </files>
