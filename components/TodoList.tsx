@@ -5,27 +5,46 @@ import type { Todo } from "@/lib/types/todo";
 import { TodoItem } from "@/components/TodoItem";
 import { getTodos } from "@/backend/todo/actions";
 
-export function TodoList() {
+export function TodoList({ filter, sort }: { filter: string; sort: string }) {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchTodos = async () => {
     setIsLoading(true);
     const fetchedTodos = await getTodos();
-    // Simple sort: incomplete first
-    const sortedTodos = fetchedTodos.sort((a, b) => {
-      if (a.completed === b.completed) {
-        return 0;
-      }
-      return a.completed ? 1 : -1;
-    });
+
+    let filteredTodos = fetchedTodos;
+    if (filter === 'pending') {
+      filteredTodos = fetchedTodos.filter(todo => !todo.completed);
+    } else if (filter === 'completed') {
+      filteredTodos = fetchedTodos.filter(todo => todo.completed);
+    }
+
+    let sortedTodos = filteredTodos;
+    if (sort === 'status') {
+      sortedTodos = filteredTodos.sort((a, b) => {
+        if (a.completed === b.completed) {
+          return 0;
+        }
+        return a.completed ? 1 : -1;
+      });
+    } else if (sort === 'status-reverse') {
+      sortedTodos = filteredTodos.sort((a, b) => {
+        if (a.completed === b.completed) {
+          return 0;
+        }
+        return a.completed ? -1 : 1;
+      });
+    }
+
+
     setTodos(sortedTodos);
     setIsLoading(false);
   };
 
   useEffect(() => {
     fetchTodos();
-  }, []);
+  }, [filter, sort]);
 
   const handleTodoUpdated = () => {
     fetchTodos();

@@ -4,40 +4,56 @@ The content has been processed where line numbers have been added.
 <files>
 This section contains the contents of the repository's files.
 
-<file path="components/Header.tsx">
+<file path="components/TodoList.tsx">
  1: "use client";
  2: 
- 3: import { useRouter } from "next/navigation";
- 4: import { Button } from "@/components/ui/button";
- 5: import { ArrowLeft } from "lucide-react";
- 6: 
- 7: interface HeaderProps {
- 8:   title: string;
- 9:   showBackButton?: boolean;
-10: }
+ 3: import { useEffect, useState } from "react";
+ 4: import type { Todo } from "@/lib/types/todo";
+ 5: import { TodoItem } from "@/components/TodoItem";
+ 6: import { getTodos } from "@/backend/todo/actions";
+ 7: 
+ 8: export function TodoList() {
+ 9:   const [todos, setTodos] = useState<Todo[]>([]);
+10:   const [isLoading, setIsLoading] = useState(true);
 11: 
-12: export function Header({ title, showBackButton = false }: HeaderProps) {
-13:   const router = useRouter();
-14: 
-15:   const handleBack = () => {
-16:     router.back();
-17:   };
-18: 
-19:   return (
-20:     <header className="flex items-center justify-between p-4 bg-white shadow-sm">
-21:       {showBackButton ? (
-22:         <Button variant="ghost" size="icon" onClick={handleBack}>
-23:           <ArrowLeft className="h-5 w-5" />
-24:           <span className="sr-only">Back</span>
-25:         </Button>
-26:       ) : (
-27:         <div className="w-10"></div> // Placeholder for alignment
-28:       )}
-29:       <h1 className="text-xl font-semibold">{title}</h1>
-30:       <div className="w-10"></div> {/* Placeholder for alignment */}
-31:     </header>
-32:   );
-33: }
+12:   const fetchTodos = async () => {
+13:     setIsLoading(true);
+14:     const fetchedTodos = await getTodos();
+15:     // Simple sort: incomplete first
+16:     const sortedTodos = fetchedTodos.sort((a, b) => {
+17:       if (a.completed === b.completed) {
+18:         return 0;
+19:       }
+20:       return a.completed ? 1 : -1;
+21:     });
+22:     setTodos(sortedTodos);
+23:     setIsLoading(false);
+24:   };
+25: 
+26:   useEffect(() => {
+27:     fetchTodos();
+28:   }, []);
+29: 
+30:   const handleTodoUpdated = () => {
+31:     fetchTodos();
+32:   };
+33: 
+34:   if (isLoading) {
+35:     return <div>Loading todos...</div>;
+36:   }
+37: 
+38:   if (todos.length === 0) {
+39:     return <div>No todos yet. Add one above!</div>;
+40:   }
+41: 
+42:   return (
+43:     <div className="max-h-[400px] overflow-y-auto">
+44:       {todos.map((todo) => (
+45:         <TodoItem key={todo.id} todo={todo} onTodoUpdated={handleTodoUpdated} />
+46:       ))}
+47:     </div>
+48:   );
+49: }
 </file>
 
 </files>
