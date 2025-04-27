@@ -1,29 +1,35 @@
-import { getTodos } from "@/backend/todo/actions";
+import { getTodoById } from "@/backend/todo/actions";
 import { Layout } from "@/components/Layout";
-import { EditTodoForm } from "@/components/EditTodoForm"; // Assuming this component exists
+import { EditTodoForm } from "@/components/EditTodoForm";
 import type { Todo } from "@/lib/types/todo";
+import { Header } from "@/components/Header";
 
 interface EditPageProps {
   params: {
     id: string;
   };
 }
+params: {
+    id: string;
+  };
+}
 
 export default async function EditPage({ params }: EditPageProps) {
-  const todos = await getTodos();
-  const todoToEdit = todos.find((todo) => todo.id === params.id);
+  const todo = await getTodoById(params.id);
 
-  if (!todoToEdit) {
-    return (
-      <Layout title="Todo Not Found">
-        <div className="container mx-auto p-4">
-          <h1 className="text-2xl font-bold mb-4">Todo Not Found</h1>
-          <p>The requested todo item could not be found.</p>
-        </div>
-      </Layout>
-    );
-  }
-
+  return (
+    <Layout title="Edit To-Do">
+      <Header title="Edit To-Do" showBackButton={true} />
+      <div className="container mx-auto p-4">
+        {todo ? (
+          <EditTodoForm initialTodo={todo} />
+        ) : (
+          <p>Todo not found.</p>
+        )}
+      </div>
+    </Layout>
+  );
+}
   return (
     <Layout title={`Edit Todo: ${todoToEdit.text}`}>
       <div className="container mx-auto p-4">
