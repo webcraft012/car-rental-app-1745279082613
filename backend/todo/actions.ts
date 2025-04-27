@@ -44,3 +44,7 @@ export async function editTodo(
 export async function getTodos(): Promise<Todo[]> {
   return todos;
 }
+export async function getTodoById(id: string): Promise<Todo | null> {
+  const todo = todos.find((todo) => todo.id === id);
+  return todo || null;
+}
