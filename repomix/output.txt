@@ -4,126 +4,38 @@ The content has been processed where line numbers have been added.
 <files>
 This section contains the contents of the repository's files.
 
-<file path="components/TodoItem.tsx">
-  1: "use client";
-  2: 
-  3:    import { useState } from "react";
-  4:    import type { Todo } from "@/lib/types/todo";
-  5:    import { Checkbox } from "@/components/ui/checkbox";
-  6:    import { Input } from "@/components/ui/input";
-  7:    import { Button } from "@/components/ui/button";
-  8:    import { Edit, Trash2, Save, X } from "lucide-react";
-  9:    import { toggleTodo, deleteTodo, editTodo } from "@/backend/todo/actions";
- 10:    import { cn } from "@/lib/utils";
- 11: 
- 12:    interface TodoItemProps {
- 13:      todo: Todo;
- 14:      onTodoUpdated: () => void;
- 15:    }
- 16: 
- 17:    export function TodoItem({ todo, onTodoUpdated }: TodoItemProps) {
- 18:      const [isEditing, setIsEditing] = useState(false);
- 19:      const [editText, setEditText] = useState(todo.text);
- 20:      const [isLoading, setIsLoading] = useState(false);
- 21: 
- 22:      const handleToggle = async () => {
- 23:        setIsLoading(true);
- 24:        await toggleTodo(todo.id);
- 25:        onTodoUpdated();
- 26:        setIsLoading(false);
- 27:      };
- 28: 
- 29:      const handleDelete = async () => {
- 30:        setIsLoading(true);
- 31:        await deleteTodo(todo.id);
- 32:        onTodoUpdated();
- 33:        setIsLoading(false);
- 34:      };
- 35: 
- 36:      const handleEdit = async () => {
- 37:        setIsLoading(true);
- 38:        await editTodo(todo.id, editText);
- 39:        setIsEditing(false);
- 40:        onTodoUpdated();
- 41:        setIsLoading(false);
- 42:      };
- 43: 
- 44:      const handleCancelEdit = () => {
- 45:        setIsEditing(false);
- 46:        setEditText(todo.text); // Reset to original text
- 47:      };
- 48: 
- 49:      return (
- 50:        <div className="flex items-center space-x-2 py-2">
- 51:          <Checkbox
- 52:            id={`todo-${todo.id}`}
- 53:            checked={todo.completed}
- 54:            onCheckedChange={handleToggle}
- 55:            disabled={isLoading}
- 56:          />
- 57:          {isEditing ? (
- 58:            <Input
- 59:              value={editText}
- 60:              onChange={(e) => setEditText(e.target.value)}
- 61:              className="flex-grow"
- 62:              disabled={isLoading}
- 63:            />
- 64:          ) : (
- 65:            <label
- 66:              htmlFor={`todo-${todo.id}`}
- 67:              className={cn(
- 68:                "flex-grow text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
- 69:                todo.completed && "line-through text-gray-500"
- 70:              )}
- 71:            >
- 72:              {todo.text}
- 73:            </label>
- 74:          )}
- 75: 
- 76:          <div className="flex space-x-1">
- 77:            {isEditing ? (
- 78:              <>
- 79:                <Button
- 80:                  variant="ghost"
- 81:                  size="sm"
- 82:                  onClick={handleEdit}
- 83:                  disabled={isLoading}
- 84:                >
- 85:                  <Save className="h-4 w-4" />
- 86:                </Button>
- 87:                <Button
- 88:                  variant="ghost"
- 89:                  size="sm"
- 90:                  onClick={handleCancelEdit}
- 91:                  disabled={isLoading}
- 92:                >
- 93:                  <X className="h-4 w-4" />
- 94:                </Button>
- 95:              </>
- 96:            ) : (
- 97:              <>
- 98:                <Button
- 99:                  variant="ghost"
-100:                  size="sm"
-101:                  onClick={() => setIsEditing(true)}
-102:                  disabled={isLoading}
-103:                >
-104:                  <Edit className="h-4 w-4" />
-105:                </Button>
-106:                <Button
-107:                  variant="ghost"
-108:                  size="sm"
-109:                  onClick={handleDelete}
-110:                  disabled={isLoading}
-111:                >
-112:                  <Trash2 className="h-4 w-4" />
-113:                </Button>
-114:              </>
-115:            )}
-116:          </div>
-117:        </div>
-118:      );
-119:    }
+<file path="app/page.tsx">
+ 1: "use client";
+ 2: 
+ 3: import { AddTodoForm } from "@/components/AddTodoForm";
+ 4: import { TodoList } from "@/components/TodoList";
+ 5: import { useState } from "react";
+ 6: 
+ 7: export default function Home() {
+ 8:   const [refreshList, setRefreshList] = useState(0);
+ 9: 
+10:   const handleTodoAdded = () => {
+11:     setRefreshList((prev) => prev + 1);
+12:   };
+13: 
+14:   return (
+15:     <div className="flex flex-col h-screen bg-gray-50">
+16:       <header className="bg-white shadow-sm p-4">
+17:         <h1 className="text-2xl font-bold text-center text-gray-800">To-Do App</h1>
+18:       </header>
+19:       <main className="flex-grow container mx-auto p-4 overflow-hidden">
+20:         <div className="flex flex-col h-full">
+21:           <div className="mb-6">
+22:             <AddTodoForm onTodoAdded={handleTodoAdded} />
+23:           </div>
+24:           <div className="flex-grow overflow-y-auto">
+25:             <TodoList key={refreshList} />
+26:           </div>
+27:         </div>
+28:       </main>
+29:     </div>
+30:   );
+31: }
 </file>
 
 </files>
