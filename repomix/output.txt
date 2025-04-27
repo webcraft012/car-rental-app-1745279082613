@@ -4,53 +4,24 @@ The content has been processed where line numbers have been added.
 <files>
 This section contains the contents of the repository's files.
 
-<file path="backend/todo/actions.ts">
- 1: "use server";
- 2: 
- 3: import { Todo } from "@/lib/types/todo";
- 4: import { v4 as uuidv4 } from "uuid";
- 5: 
- 6: // Simple in-memory storage for todos
- 7: let todos: Todo[] = [];
- 8: 
- 9: export async function addTodo(text: string): Promise<Todo> {
-10:   const newTodo: Todo = {
-11:     id: uuidv4(),
-12:     text,
-13:     completed: false,
-14:   };
-15:   todos.push(newTodo);
-16:   return newTodo;
+<file path="lib/types/todo.ts">
+ 1: /**
+ 2:  * Interface for a To-Do item.
+ 3:  */
+ 4: export interface Todo {
+ 5:   /**
+ 6:    * Unique identifier for the To-Do item.
+ 7:    */
+ 8:   id: string;
+ 9:   /**
+10:    * The task description.
+11:    */
+12:   text: string;
+13:   /**
+14:    * Completion status of the To-Do item.
+15:    */
+16:   completed: boolean;
 17: }
-18: 
-19: export async function toggleTodo(id: string): Promise<Todo | null> {
-20:   const todo = todos.find((todo) => todo.id === id);
-21:   if (todo) {
-22:     todo.completed = !todo.completed;
-23:     return todo;
-24:   }
-25:   return null;
-26: }
-27: 
-28: export async function deleteTodo(id: string): Promise<void> {
-29:   todos = todos.filter((todo) => todo.id !== id);
-30: }
-31: 
-32: export async function editTodo(
-33:   id: string,
-34:   newText: string
-35: ): Promise<Todo | null> {
-36:   const todo = todos.find((todo) => todo.id === id);
-37:   if (todo) {
-38:     todo.text = newText;
-39:     return todo;
-40:   }
-41:   return null;
-42: }
-43: 
-44: export async function getTodos(): Promise<Todo[]> {
-45:   return todos;
-46: }
 </file>
 
 </files>
