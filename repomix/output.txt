@@ -1,405 +1,86 @@
-This file is a merged representation of a subset of the codebase, containing files not matching ignore patterns, combined into a single document by Repomix.
-The content has been processed where content has been compressed (code blocks are separated by ⋮---- delimiter).
-
-<directory_structure>
-app/
-  edit/
-    [id]/
-      page.tsx
-  server-components/
-    example/
-      index.tsx
-  layout.tsx
-  page.tsx
-backend/
-  example/
-    actions.ts
-  todo/
-    actions.ts
-components/
-  ui/
-    button.tsx
-    checkbox.tsx
-    input.tsx
-  AddTodoForm.tsx
-  EditTodoForm.tsx
-  FilterSortControls.tsx
-  Header.tsx
-  IframeEventHandler.tsx
-  Layout.tsx
-  TodoItem.tsx
-  TodoList.tsx
-lib/
-  store/
-    example-store.ts
-  types/
-    example.ts
-    todo.ts
-  utils.ts
-</directory_structure>
+This file is a merged representation of a subset of the codebase, containing specifically included files, combined into a single document by Repomix.
+The content has been processed where line numbers have been added.
 
 <files>
 This section contains the contents of the repository's files.
 
-<file path="app/edit/[id]/page.tsx">
-import { getTodoById } from "@/backend/todo/actions";
-import { Layout } from "@/components/Layout";
-import { EditTodoForm } from "@/components/EditTodoForm";
-import type { Todo } from "@/lib/types/todo";
-import { Header } from "@/components/Header";
-⋮----
-interface EditPageProps {
-  params: {
-    id: string;
-  };
-}
-</file>
-
-<file path="app/server-components/example/index.tsx">
-/**
- * Example server component placeholder - functionality removed
- */
-import React from "react";
-⋮----
-export default function ExampleServerComponent()
-</file>
-
-<file path="app/layout.tsx">
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import IframeEventHandler from "@/components/IframeEventHandler";
-⋮----
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-})
-</file>
-
-<file path="backend/example/actions.ts">
-/**
- * Backend actions placeholder - Todo functionality removed
- */
-⋮----
-// Example placeholder for server actions
-export async function placeholderAction()
-</file>
-
-<file path="backend/todo/actions.ts">
-import { Todo } from "@/lib/types/todo";
-import { v4 as uuidv4 } from "uuid";
-⋮----
-// Simple in-memory storage for todos
-⋮----
-export async function addTodo(text: string): Promise<Todo>
-⋮----
-export async function toggleTodo(id: string): Promise<Todo | null>
-⋮----
-export async function deleteTodo(id: string): Promise<void>
-⋮----
-export async function editTodo(
-  id: string,
-  newText: string
-): Promise<Todo | null>
-⋮----
-export async function getTodos(): Promise<Todo[]>
-export async function getTodoById(id: string): Promise<Todo | null>
-</file>
-
-<file path="components/ui/button.tsx">
-import { cn } from "@/lib/utils";
-⋮----
-/**
- * Button component props
- *
- * @interface ButtonProps
- * @extends {React.ButtonHTMLAttributes<HTMLButtonElement>}
- */
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  /**
-   * The variant style of the button
-   */
-  variant?: "default" | "outline" | "ghost";
-}
-⋮----
-/**
-   * The variant style of the button
-   */
-⋮----
-/**
- * Button component
- *
- * A reusable button component with different style variants
- *
- * @param {ButtonProps} props - Component properties
- * @returns {JSX.Element} The button component
- */
-⋮----
-// Different styling based on variant
-⋮----
-className=
-</file>
-
-<file path="components/ui/checkbox.tsx">
-import { Check } from "lucide-react"
-⋮----
-import { cn } from "@/lib/utils"
-⋮----
-className=
-</file>
-
-<file path="components/ui/input.tsx">
-import { cn } from "@/lib/utils"
-⋮----
-className=
-</file>
-
-<file path="components/AddTodoForm.tsx">
-import { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { addTodo } from "@/backend/todo/actions";
-⋮----
-interface AddTodoFormProps {
-  onTodoAdded: () => void;
-}
-⋮----
-const handleSubmit = async (e: React.FormEvent) =>
-⋮----
-onChange=
-</file>
-
-<file path="components/EditTodoForm.tsx">
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import type { Todo } from "@/lib/types/todo";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { editTodo } from "@/backend/todo/actions";
-⋮----
-interface EditTodoFormProps {
-  initialTodo: Todo;
-}
-⋮----
-export function EditTodoForm(
-⋮----
-const handleSubmit = async (e: React.FormEvent) =>
-⋮----
-// Optionally display an error message to the user
-⋮----
-const handleCancel = () =>
-⋮----
-onChange=
-</file>
-
-<file path="components/FilterSortControls.tsx">
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-⋮----
-interface FilterSortControlsProps {
-  currentFilter: string;
-  currentSort: string;
-  onFilterChange: (filter: string) => void;
-  onSortChange: (sort: string) => void;
-}
-⋮----
-export function FilterSortControls({
-  currentFilter,
-  currentSort,
-  onFilterChange,
-  onSortChange,
-}: FilterSortControlsProps)
-⋮----
-{/* Add other sort options here if needed */}
-</file>
-
-<file path="components/IframeEventHandler.tsx">
-import { useEffect } from "react";
-⋮----
-/**
- * This component is used to handle messages from the parent window
- * and to override the history methods to notify the parent window
- * when the URL changes.
- *
- * For LLM Agent: Ignore this file.
- */
-export default function IframeEventHandler()
-⋮----
-// Only run on client side
-⋮----
-// Set up message event listener for the parent window commands
-const messageHandler = (event: MessageEvent) =>
-⋮----
-// Notify parent when the URL changes
-⋮----
-// @ts-ignore - we need to override the history methods
-⋮----
-// @ts-ignore - we need to override the history methods
-⋮----
-const popstateHandler = () =>
-⋮----
-// Cleanup function to remove listeners and restore original methods
-⋮----
-// This component doesn't render anything
-</file>
-
-<file path="components/Layout.tsx">
-import React from "react";
-⋮----
-/**
- * Props for the Layout component
- *
- * @interface LayoutProps
- * @property {React.ReactNode} children - The content to render inside the layout
- * @property {string} [title] - The page title
- * @property {string} [description] - The page meta description
- */
-interface LayoutProps {
-  children: React.ReactNode;
-  title?: string;
-  description?: string;
-}
-⋮----
-/**
- * Layout component that wraps all pages
- *
- * Provides consistent page structure with head metadata
- *
- * @param {LayoutProps} props - Component props
- * @returns {JSX.Element} The layout component
- */
-export function Layout(
-</file>
-
 <file path="components/TodoItem.tsx">
-import { useRouter } from "next/navigation";
-import type { Todo } from "@/lib/types/todo";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Button } from "@/components/ui/button";
-import { Edit, Trash2 } from "lucide-react";
-import { toggleTodo, deleteTodo } from "@/backend/todo/actions";
-import { cn } from "@/lib/utils";
-⋮----
-interface TodoItemProps {
-     todo: Todo;
-     onTodoUpdated: () => void;
-   }
-⋮----
-const handleToggle = async () =>
-⋮----
-const handleDelete = async () =>
-const handleEditClick = () =>
-</file>
-
-<file path="lib/store/example-store.ts">
-/**
- * Store placeholder - Todo functionality removed
- */
-import { create } from "zustand";
-⋮----
-// Empty store placeholder
-</file>
-
-<file path="lib/types/example.ts">
-/**
- * Types placeholder - Todo functionality removed
- */
-⋮----
-// Empty interface placeholder
-export interface PlaceholderType {}
-</file>
-
-<file path="lib/types/todo.ts">
-/**
- * Interface for a To-Do item.
- */
-export interface Todo {
-  /**
-   * Unique identifier for the To-Do item.
-   */
-  id: string;
-  /**
-   * The task description.
-   */
-  text: string;
-  /**
-   * Completion status of the To-Do item.
-   */
-  completed: boolean;
-}
-⋮----
-/**
-   * Unique identifier for the To-Do item.
-   */
-⋮----
-/**
-   * The task description.
-   */
-⋮----
-/**
-   * Completion status of the To-Do item.
-   */
-</file>
-
-<file path="lib/utils.ts">
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
-⋮----
-export function cn(...inputs: ClassValue[])
-</file>
-
-<file path="components/Header.tsx">
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
-⋮----
-interface HeaderProps {
-  title: string;
-  showBackButton?: boolean;
-interface HeaderProps {
-  title: string;
-  showBackButton?: boolean;
-  rightContent?: React.ReactNode;
-}
-⋮----
-const handleBack = () =>
-⋮----
-<div className="w-10"></div> {/* Placeholder for alignment */}
-</file>
-
-<file path="components/TodoList.tsx">
-import { useEffect, useState } from "react";
-import type { Todo } from "@/lib/types/todo";
-import { TodoItem } from "@/components/TodoItem";
-import { getTodos } from "@/backend/todo/actions";
-⋮----
-export function TodoList(
-⋮----
-const fetchTodos = async () =>
-⋮----
-const handleTodoUpdated = () =>
-</file>
-
-<file path="app/page.tsx">
-import { AddTodoForm } from "@/components/AddTodoForm";
-import { TodoList } from "@/components/TodoList";
-import { useState } from "react";
-import { Header } from "@/components/Header";
-import { FilterSortControls } from "@/components/FilterSortControls";
-⋮----
-export default function Home()
-⋮----
-const handleTodoAdded = () =>
-⋮----
-const handleFilterChange = (newFilter: string) =>
-⋮----
-const handleSortChange = (newSort: string) =>
+ 1: "use client";
+ 2: 
+ 3: import { useRouter } from "next/navigation";
+ 4: import type { Todo } from "@/lib/types/todo";
+ 5: import { Checkbox } from "@/components/ui/checkbox";
+ 6: import { Button } from "@/components/ui/button";
+ 7: import { Edit, Trash2 } from "lucide-react";
+ 8: import { toggleTodo, deleteTodo } from "@/backend/todo/actions";
+ 9: import { cn } from "@/lib/utils";
+10: 
+11:    interface TodoItemProps {
+12:      todo: Todo;
+13:      onTodoUpdated: () => void;
+14:    }
+15: 
+16: export function TodoItem({ todo, onTodoUpdated }: TodoItemProps) {
+17:   const router = useRouter();
+18:   const [isLoading, setIsLoading] = useState(false);
+19: 
+20:      const handleToggle = async () => {
+21:        setIsLoading(true);
+22:        await toggleTodo(todo.id);
+23:        onTodoUpdated();
+24:        setIsLoading(false);
+25:      };
+26: 
+27:      const handleDelete = async () => {
+28:        setIsLoading(true);
+29:        await deleteTodo(todo.id);
+30:        onTodoUpdated();
+31:        setIsLoading(false);
+32:      };
+33: const handleEditClick = () => {
+34:     router.push(`/edit/${todo.id}`);
+35:   };
+36: 
+37:      return (
+38:        <div className="flex items-center space-x-2 py-2">
+39:          <Checkbox
+40:            id={`todo-${todo.id}`}
+41:            checked={todo.completed}
+42:            onCheckedChange={handleToggle}
+43:            disabled={isLoading}
+44:          />
+45: <label
+46:             htmlFor={`todo-${todo.id}`}
+47:             className={cn(
+48:               "flex-grow text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+49:               todo.completed && "line-through text-gray-500"
+50:             )}
+51:           >
+52:             {todo.text}
+53:           </label>
+54: 
+55: <div className="flex space-x-1">
+56:             <Button
+57:               variant="ghost"
+58:               size="sm"
+59:               onClick={handleEditClick}
+60:               disabled={isLoading}
+61:             >
+62:               <Edit className="h-4 w-4" />
+63:             </Button>
+64:             <Button
+65:               variant="ghost"
+66:               size="sm"
+67:               onClick={handleDelete}
+68:               disabled={isLoading}
+69:             >
+70:               <Trash2 className="h-4 w-4" />
+71:             </Button>
+72:           </div>
+73:          </div>
+74:        </div>
+75:      );
+76:    }
 </file>
 
 </files>

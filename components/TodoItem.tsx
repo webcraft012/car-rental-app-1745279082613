@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 
 export function TodoItem({ todo, onTodoUpdated }: TodoItemProps) {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
+const [isLoading, setIsLoading] = useState(false);
 
      const handleToggle = async () => {
        setIsLoading(true);
