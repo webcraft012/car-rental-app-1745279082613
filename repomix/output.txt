@@ -4,13 +4,24 @@ The content has been processed where line numbers have been added.
 <files>
 This section contains the contents of the repository's files.
 
-<file path="lib/types/example.ts">
-1: /**
-2:  * Types placeholder - Todo functionality removed
-3:  */
-4: 
-5: // Empty interface placeholder
-6: export interface PlaceholderType {}
+<file path="lib/types/todo.ts">
+ 1: /**
+ 2:  * Interface for a To-Do item.
+ 3:  */
+ 4: export interface Todo {
+ 5:   /**
+ 6:    * Unique identifier for the To-Do item.
+ 7:    */
+ 8:   id: string;
+ 9:   /**
+10:    * The task description.
+11:    */
+12:   text: string;
+13:   /**
+14:    * Completion status of the To-Do item.
+15:    */
+16:   completed: boolean;
+17: }
 </file>
 
 </files>
