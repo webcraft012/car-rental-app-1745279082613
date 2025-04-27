@@ -1,17 +1,31 @@
-/**
- * Main page component as an async server component.
- */
+"use client";
+
+import { AddTodoForm } from "@/components/AddTodoForm";
+import { TodoList } from "@/components/TodoList";
+import { useState } from "react";
+
 export default function Home() {
+  const [refreshList, setRefreshList] = useState(0);
+
+  const handleTodoAdded = () => {
+    setRefreshList((prev) => prev + 1);
+  };
+
   return (
-    <main className="min-h-screen bg-gray-50 py-8">
-      <div className="container mx-auto">
-        <h1 className="text-3xl font-bold text-center mb-8">Welcome</h1>
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <p className="text-center text-gray-600">
-            This is a Next.js application with the structure in place.
-          </p>
+    <div className="flex flex-col h-screen bg-gray-50">
+      <header className="bg-white shadow-sm p-4">
+        <h1 className="text-2xl font-bold text-center text-gray-800">To-Do App</h1>
+      </header>
+      <main className="flex-grow container mx-auto p-4 overflow-hidden">
+        <div className="flex flex-col h-full">
+          <div className="mb-6">
+            <AddTodoForm onTodoAdded={handleTodoAdded} />
+          </div>
+          <div className="flex-grow overflow-y-auto">
+            <TodoList key={refreshList} />
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </div>
   );
 }
